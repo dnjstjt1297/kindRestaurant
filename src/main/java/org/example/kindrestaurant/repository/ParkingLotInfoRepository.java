@@ -33,7 +33,7 @@ public class ParkingLotInfoRepository {
             long start = 1;
             long end = 1000;
             while (true) {
-                URL url = new URL("http://openAPI.seoul.go.kr:8088/677055674a646e6a333246536c664a/json/GetParkInfo/" + start + "/" + end + "/");
+                URL url = new URL("http://openAPI.seoul.go.kr:8088/{인증키}/json/GetParkInfo/" + start + "/" + end + "/");
 
                 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 String result = bf.readLine();
