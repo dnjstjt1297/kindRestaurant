@@ -32,7 +32,7 @@ public class KindRestaurantInfoRepository {
             long end = 1000;
             while (true) {
 
-                URL url = new URL("http://openAPI.seoul.go.kr:8088/677055674a646e6a333246536c664a/json/ListPriceModelStoreService/" + start + "/" + end + "/");
+                URL url = new URL("http://openAPI.seoul.go.kr:8088/{인증키}/json/ListPriceModelStoreService/" + start + "/" + end + "/");
 
                 BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
                 String result = bf.readLine();
@@ -154,7 +154,7 @@ public class KindRestaurantInfoRepository {
         URL Url = new URL(url);
 
         HttpsURLConnection conn = (HttpsURLConnection) Url.openConnection();
-        String auth = "KakaoAK " + "0832119a8a00b2f9c28f1efcef371287";
+        String auth = "KakaoAK " + "{인증키}";
         conn.setRequestMethod("GET");
         conn.setRequestProperty("X-Requested-With", "curl");
         conn.setRequestProperty("Authorization", auth);
