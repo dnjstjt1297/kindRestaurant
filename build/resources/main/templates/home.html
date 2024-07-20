@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .update-button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .update-button {
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .update-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="update-button-container">
+        <form method="post" action="/update">
+            <button type="submit" class="update-button">Update</button>
+        </form>
+    </div>
+
+    <h1>착한 식당, 지금 찾기</h1>
+    <form method="POST" action="/search">
+        <div class="form-group">
+            <label for="name">음식점 검색:</label>
+            <input type="text" id="name" name="name" placeholder="음식점 이름 입력"/>
+        </div>
+
+        <div class="form-group">
+            <label for="category">카테고리:</label>
+            <select id="category" name="category">
+                <option value="All">카테고리 선택</option>
+                <option value="한식">한식</option>
+                <option value="중식">중식</option>
+                <option value="일식&경양식">일식&경양식</option>
+                <option value="카페&패스트푸드">카페&패스트푸드</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="lat">경도 (위치 입력 시 주변 음식점 검색):</label>
+            <input type="number" id="lat" name="lat" step="any" placeholder="경도 입력"/>
+        </div>
+
+        <div class="form-group">
+            <label for="lot">위도:</label>
+            <input type="number" id="lot" name="lot" step="any" placeholder="위도 입력"/>
+        </div>
+
+        <button type="submit">Search</button>
+    </form>
+</div>
+</body>
+</html>

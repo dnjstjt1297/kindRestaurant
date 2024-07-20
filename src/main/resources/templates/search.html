@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>음식점 검색 결과</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        h3 {
+            margin-top: 20px;
+            color: #007bff;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>음식점 검색 결과</h2>
+
+    <h3>음식점 목록</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>식당 이름</th>
+            <th>카테고리</th>
+            <th>주소</th>
+            <th>추천 수</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="info : ${restaurantInfos}">
+            <td th:text="${info.getSH_NAME()}"></td>
+            <td th:text="${info.getINDUTY_CODE_SE_NAME()}"></td>
+            <td th:text="${info.getSH_ADDR()}"></td>
+            <td th:text="${info.getSH_RCMN()}"></td>
+            <td>
+                <a th:href="@{/restaurant/{id}(id=${info.getSH_ID()})}">식당 상세보기</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

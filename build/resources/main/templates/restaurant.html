@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>음식점 상세정보</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        .card {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-right: 20px;
+            flex: 1;
+        }
+        .card-content {
+            flex: 2;
+        }
+        .card-content h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .card-content p {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #555;
+        }
+        .card-content .detail {
+            margin-bottom: 10px;
+        }
+        .card-content .detail span {
+            font-weight: bold;
+        }
+        .parking-lots {
+            margin-top: 30px;
+        }
+        .parking-lots ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .parking-lots li {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .parking-lots li span {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>음식점 상세정보</h2>
+
+    <div class="card">
+        <img th:src="${restaurantInfo.getSH_PHOTO()}" alt="음식점 사진" />
+        <div class="card-content">
+            <h3 th:text="${restaurantInfo.getSH_NAME()}"></h3>
+            <p class="detail"><span>카테고리:</span> <span th:text="${restaurantInfo.getINDUTY_CODE_SE_NAME()}"></span></p>
+            <p class="detail"><span>주소:</span> <span th:text="${restaurantInfo.getSH_ADDR()}"></span></p>
+            <p class="detail"><span>전화 번호:</span> <span th:text="${restaurantInfo.getSH_PHONE()}"></span></p>
+            <p class="detail"><span>찾아오시는 길:</span> <span th:text="${restaurantInfo.getSH_WAY()}"></span></p>
+            <p class="detail"><span>영업 시간:</span> <span th:text="${restaurantInfo.getSH_INFO()}"></span></p>
+            <p class="detail"><span>식당 소개:</span> <span th:text="${restaurantInfo.getSH_PRIDE()}"></span></p>
+            <p class="detail"><span>추천 수:</span> <span th:text="${restaurantInfo.getSH_RCMN()}"></span></p>
+        </div>
+    </div>
+
+    <div class="parking-lots">
+        <h3>주변 공영주차장</h3>
+        <div th:if="${parkingLots != null}">
+            <ul>
+                <li th:each="parking : ${parkingLots}">
+                    <span th:text="${parking.getPKLT_NM()}"></span>,
+                    <span th:text="${parking.getADDR()}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
