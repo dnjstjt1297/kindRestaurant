@@ -24,38 +24,31 @@
         }
         label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
+            margin-bottom: 5px;
         }
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 8px;
             box-sizing: border-box;
-            font-size: 16px;
         }
         button {
-            padding: 12px 20px;
+            padding: 10px 15px;
             background-color: #007bff;
-            color: #fff;
+            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
         }
         button:hover {
             background-color: #0056b3;
         }
         .update-button-container {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
         }
         .update-button {
-            padding: 12px 20px;
+            padding: 10px 20px;
             font-size: 16px;
             background-color: #28a745;
             color: white;
@@ -65,6 +58,23 @@
         }
         .update-button:hover {
             background-color: #218838;
+        }
+        .button-container {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        #resetButton {
+            padding: 8px 12px;
+            background-color: #ff5e57;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        #resetButton:hover {
+            background-color: #e04a45;
         }
     </style>
 </head>
@@ -77,11 +87,11 @@
         </form>
     </div>
 
-    <h1>착한 식당, 지금 찾기</h1>
-    <form method="POST" action="/search">
+    <h2>착한 식당, 지금 찾기</h2>
+    <form method="POST" action="/search" id="searchForm">
         <div class="form-group">
             <label for="name">음식점 검색:</label>
-            <input type="text" id="name" name="name" placeholder="음식점 이름 입력"/>
+            <input type="text" id="name" name="name" placeholder="음식점 검색"/>
         </div>
 
         <div class="form-group">
@@ -95,18 +105,69 @@
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="lat">경도 (위치 입력 시 주변 음식점 검색):</label>
-            <input type="number" id="lat" name="lat" step="any" placeholder="경도 입력"/>
-        </div>
-
-        <div class="form-group">
-            <label for="lot">위도:</label>
-            <input type="number" id="lot" name="lot" step="any" placeholder="위도 입력"/>
-        </div>
+        <input type="hidden" id="lat" name="lat">
+        <input type="hidden" id="lot" name="lot">
 
         <button type="submit">Search</button>
     </form>
+
+    <div id="map" style="width:100%;height:350px;margin-top:20px;position:relative;"></div>
+    <div id="clickLatlng"></div>
+
+    <div class="button-container">
+        <button id="resetButton">좌표 초기화</button>
+    </div>
 </div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=395730518dde211ead073786cbed2675"></script>
+<script>
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+            center: new kakao.maps.LatLng(37.496486063, 127.028361548),
+            level: 3
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var marker = new kakao.maps.Marker({
+        map: map,
+        visible: false
+    });
+
+
+    kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+        var latlng = mouseEvent.latLng;
+
+        marker.setPosition(latlng);
+        marker.setMap(map);
+
+        var message = '위도: ' + latlng.getLat() + '\n' +'경도: ' + latlng.getLng();
+
+        var resultDiv = document.getElementById('clickLatlng');
+        resultDiv.innerHTML = message;
+
+        document.getElementById('lat').value = latlng.getLat();
+        document.getElementById('lot').value = latlng.getLng();
+    });
+
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        var lat = document.getElementById('lat').value;
+        var lot = document.getElementById('lot').value;
+        console.log('Latitude: ', lat);
+        console.log('Longitude: ', lot);
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function() {
+        var initialCenter = new kakao.maps.LatLng(37.496486063, 127.028361548);
+        map.setCenter(initialCenter);
+
+        marker.setMap(null); // 마커 제거
+
+        document.getElementById('lat').value = '';
+        document.getElementById('lot').value = '';
+
+        document.getElementById('clickLatlng').innerHTML = '';
+    });
+</script>
 </body>
 </html>

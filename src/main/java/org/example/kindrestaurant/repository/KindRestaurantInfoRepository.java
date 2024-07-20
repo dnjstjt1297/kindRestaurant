@@ -120,7 +120,7 @@ public class KindRestaurantInfoRepository {
         }
 
 
-        if(lat!=null &&lot!=null){
+        if(lat!=null && lot!=null){
 
             jpql.append(" and k.LAT BETWEEN :latMin AND :latMax " +
             "AND k.LOT BETWEEN :lonMin AND :lonMax");
@@ -132,10 +132,10 @@ public class KindRestaurantInfoRepository {
 
 
         if(lat!=null &&lot!=null){
-            query.setParameter("latMin", lat - 0.05);
-            query.setParameter("latMax", lat + 0.05);
-            query.setParameter("lonMin", lot - 0.05);
-            query.setParameter("lonMax", lot + 0.05);
+            query.setParameter("latMin", lot - 0.02);
+            query.setParameter("latMax", lot + 0.02);
+            query.setParameter("lonMin", lat - 0.02);
+            query.setParameter("lonMax", lat + 0.02);
         }
 
         return query.getResultList();

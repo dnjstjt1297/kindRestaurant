@@ -22,7 +22,6 @@ public class KindRestaurantController {
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "lat", required = false) Double lat,
             @RequestParam(value = "lot", required = false) Double lot,
-
             Model model) throws Exception {
 
         List<KindRestaurantInfo> restaurantInfos = kindRestaurantService.searchRestaurants(name, category, lat, lot);

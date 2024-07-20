@@ -51,6 +51,13 @@
         .card-content .detail span {
             font-weight: bold;
         }
+        .map-container {
+            width: 100%;
+            height: 350px;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
         .parking-lots {
             margin-top: 30px;
         }
@@ -90,6 +97,8 @@
         </div>
     </div>
 
+    <div id="map" class="map-container"></div>
+
     <div class="parking-lots">
         <h3>주변 공영주차장</h3>
         <div th:if="${parkingLots != null}">
@@ -102,5 +111,28 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=395730518dde211ead073786cbed2675"></script>
+<script>
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+            center: new kakao.maps.LatLng([[${restaurantInfo.getLOT()}]], [[${restaurantInfo.getLAT()}]]), // 음식점의 위도와 경도로 설정
+            level: 3
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng([[${restaurantInfo.getLOT()}]], [[${restaurantInfo.getLAT()}]])
+    });
+
+    var infowindow = new kakao.maps.InfoWindow({
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">[[${restaurantInfo.SH_NAME}]]</div>'
+    });
+    infowindow.open(map, marker);
+
+    map.setCenter(new kakao.maps.LatLng( [[${restaurantInfo.getLOT()}]], [[${restaurantInfo.getLAT()}]]));
+</script>
 </body>
 </html>
